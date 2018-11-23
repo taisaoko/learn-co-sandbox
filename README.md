@@ -10,11 +10,13 @@ Please DO NOT touch this repository in GitHub, as it will affect your Sandbox ex
 
 To learn more about the Sandbox, please visit http://help.learn.co/ide-in-browser#sandbox.
  def self.scrape_sinclair
-    doc = Nokogiri::HTML(open("http://sinclair.edu/academics/all-programs"))
-    program = []
-    doc.css("ul.pagination li").each do |r|
-      program << r.text
+    doc = Nokogiri::HTML(open("http://sinclair.edu/academics/online/"))
+    program_list = []
+    
+    doc.css(".col-xl-8.col-12 ul li").children.each do |children|
+      program_list << children.text
     end
+    program_list
     
     # program_list = []
     
@@ -32,4 +34,26 @@ To learn more about the Sandbox, please visit http://help.learn.co/ide-in-browse
     
     #doc.css("div.c-4.nr.nt ul:nth-child(8) li").text
     
+  end
+  
+  def print_program(program)
+    puts ""
+    puts "----------- #{program.name} - #{program.degree_type} -----------"
+    puts ""
+    puts "Division:            #{program.division}"
+    puts "Department:          #{program.department}"
+    puts "Contact:             #{program.contact}"
+    puts "Website:             #{program.url}"
+    puts "---------------Outcomes--------------" 
+    puts ""
+    puts "#{program.outcomes}"
+    puts ""
+    puts "--------Career Opportunities---------"
+    puts ""
+    puts "#{program.career_opportunity}"
+    puts ""
+    puts "---------------Description--------------"
+    puts ""
+    puts "#{program.description}"
+    puts ""
   end
